@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="ssi-demo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ssi-demo-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ssi-demo:war exploded" />
+    </root>
+  </artifact>
+</component>
