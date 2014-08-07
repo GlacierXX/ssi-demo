@@ -1,7 +1,6 @@
-package com.shy.demo.mybatis;
+package com.shy.demo.mybatis.utils;
 
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
@@ -14,20 +13,19 @@ import java.io.InputStream;
  * Time: 下午4:23
  * To change this template use File | Settings | File Templates.
  */
-public class DaoUtils {
-    private static SqlSession sqlSession;
+public class SqlSessionFactoryUtils {
+    private static SqlSessionFactory sqlSessionFactory;
     private static String resource = "/mybatis_conf.xml";
 
-    public static SqlSession getDao() {
-        try{
+    public static synchronized SqlSessionFactory getSqlSessionFactory() {
+        try {
             InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            return sqlSession = sqlSessionFactory.openSession();
-        }catch(Exception e){
+            if(sqlSessionFactory == null){
+                sqlSessionFactory =  new SqlSessionFactoryBuilder().build(inputStream);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            sqlSession.close();
         }
-        return sqlSession;
+        return sqlSessionFactory;
     }
 }

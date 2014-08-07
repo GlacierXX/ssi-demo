@@ -1,15 +1,14 @@
 package com.shy.demo.mybatis.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.shy.demo.mybatis.DaoUtils;
-import org.apache.ibatis.io.Resources;
+
+import com.shy.demo.mybatis.bean.Province;
+import com.shy.demo.mybatis.utils.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -20,31 +19,29 @@ import java.util.Map;
  * Time: 下午4:42
  * To change this template use File | Settings | File Templates.
  */
-public class QueryProvince extends ActionSupport {
-    private String resource = "/mybatis_conf.xml";
+public class QueryProvinceAction extends ActionSupport {
     private SqlSession sqlSession;
-    private List<Map> provinceList;
+    private List<Province> provinceList;
 
-    @Action(value = "/queryProvince/init", results = {@Result(name = "success",location = "/view/mybatis/Province.ftl")})
+    @Action(value = "/queryProvince/init", results = {@Result(name = "success", location = "/view/mybatis/Province.ftl")})
     public String init() throws Exception {
-        try{
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        try {
+            SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
             sqlSession = sqlSessionFactory.openSession();
             provinceList = sqlSession.selectList("queryProvince.getProvinceInfo");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return SUCCESS;
     }
 
-    public List<Map> getProvinceList() {
+    public List<Province> getProvinceList() {
         return provinceList;
     }
 
-    public void setProvinceList(List<Map> provinceList) {
+    public void setProvinceList(List<Province> provinceList) {
         this.provinceList = provinceList;
     }
 }

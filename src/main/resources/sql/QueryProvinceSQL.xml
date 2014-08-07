@@ -2,8 +2,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="queryProvince">
+    <resultMap id="province" type="com.shy.demo.mybatis.bean.Province">
+        <result column="PROVINCE_NAME" property="provinceName"/>
+        <result column="PROVINCE_CODE" property="provinceCode"/>
+    </resultMap>
     <!-- 查询省份信息 -->
-    <select id="getProvinceInfo" resultMap="java.util.HashMap">
-		SELECT * FROM TF_M_PROVINCE
+    <select id="getProvinceInfo" resultMap="province">
+		SELECT PROVINCE_CODE,
+		       PROVINCE_NAME
+		  FROM TF_M_PROVINCE
 	</select>
 </mapper>

@@ -1,9 +1,0 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="queryProvince">
-    <!-- 查询省份信息 -->
-    <select id="getProvinceInfo">
-		SELECT * FROM TF_M_PROVINCE
-	</select>
-</mapper>
